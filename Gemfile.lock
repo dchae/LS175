@@ -1,0 +1,22 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    rack (2.2.8)
+    rake (13.0.6)
+    rufo (0.16.2)
+    webrick (1.8.1)
+
+PLATFORMS
+  x86_64-darwin-22
+
+DEPENDENCIES
+  rack (~> 2.2)
+  rake
+  rufo
+  webrick
+
+RUBY VERSION
+   ruby 3.2.2p53
+
+BUNDLED WITH
+   2.4.10
