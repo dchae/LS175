@@ -1,6 +1,2 @@
 <h2 class="content-subhead"><%= @title %></h2>
-<% @chapter.split("\n\n").each do |paragraph| %>
-  <p class="content-chapter">
-    <%= paragraph %>
-  </p>
-<% end %>
+<%= in_paragraphs(@chapter) %>
