@@ -14,7 +14,7 @@
             <ul class='search-result-items'>
               <% par_arr.filter { |par_num, par| par_num > 0 }.each do |par_num, par| %>
                 <li class='search-result-item'>
-                  <a href=/chapters/<%=chp%>#paragraph-<%=par_num%> class="search-result-item-link"><%=par%></a>
+                  <a href=/chapters/<%=chp%>#paragraph-<%=par_num%> class="search-result-item-link"><%=highlight(@regex_term, par)%></a>
                 </li>
               <% end%>
             </ul>

@@ -15,6 +15,14 @@ helpers do
       end
       .join("\n")
   end
+
+  def highlight(term, text)
+    text.gsub(/#{term}/i) { |phrase| "<strong>#{phrase}</strong>" }
+  end
+
+  def text_line(term, text)
+    /(?<=\n|^).*#{term}[^\n$]*/i.match(text).to_s
+  end
 end
 
 get '/' do
@@ -38,37 +46,28 @@ not_found do
   redirect '/'
 end
 
-
 def search_for(term)
   res = Hash.new { |h, k| h[k] = [] }
-  return res unless term && term.size > 0
+  return res unless term.size > 0
 
-  # (1..@contents.size).filter do |n|
-  #   /#{term.split.join('\s+')}/i =~
-  #     @contents[n - 1] + ' ' + File.read("data/chp#{n}.txt")
-  # end
-
-  regex_term = term.split.join('\s+')
 
   (1..@contents.size).each_with_object(res) do |chp, results|
     to_search =
       [@contents[chp - 1]] + File.read("data/chp#{chp}.txt").split(/\n{2,}/)
     to_search.each_with_index do |par, par_num|
-      if /#{regex_term}/i =~ par
-        results[chp] << [
-          par_num,
-          par.gsub(/#{regex_term}/) do |phrase|
-            "<strong>#{phrase}</strong>"
-          end,
-        ]
+      if /#{term}/i =~ par
+        line = text_line(term, par)
+        # results[chp] << [par_num, highlight(regex_term, line)]
+        results[chp] << [par_num, line]
       end
     end
   end
 end
 
 get '/search' do
-  @term = params[:query]
-  @results = search_for(@term)
+  @term = params[:query] || ""
+  @regex_term = @term.split.join('\s+')
+  @results = search_for(@regex_term)
 
   erb :search
 end
