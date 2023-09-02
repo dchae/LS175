@@ -1,0 +1,21 @@
+<h4 class="content-subhead">Users</h4>
+<div class= 'user-info'>
+  <p>Email Address: 
+    <a href="mailto:<%= @users[@user][:email]%>"><%=@users[@user][:email]%></a>
+  </p>
+  <p>Interests: <%= @users[@user][:interests].join(", ") %></p>
+</div>
+
+<h4 class="content-subhead">Other Users</h4>
+<div class="pure-menu">
+  <ul class="pure-menu-list">
+    <% @users.keys.reject { |key| key == @user}.each do |user| %>
+      <li class='pure-menu-item'>
+        <a href="/users/<%= user %>" class="pure-menu-link"><%= user %></a>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+
+<a href="/" class="pure-menu-link">Return to Index<a>
